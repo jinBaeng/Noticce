@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/public/style.css">
+
+  <title>Document</title>
+</head>
+<body>
+  <header>
+    <%- include('../partials/nav'); %>
+  </header>
+  <main>
+    <% if(checkId==true){ %>
+    <div class="buttons">
+        <a href="/update/<%= detail[0].board_id %>">
+          <button class="updateBtn">수정</button>
+        </a>
+      
+      <form action="/delete" method="post" style="display: inline-block;">
+        <button class="deleteBtn">삭제</button>
+        <input type="text" value="<%= detail[0].board_id%>" name="board_id" style="display: none;">
+      </form>
+    </div>
+    <hr>
+    <% }%>
+
+
+    <section class="detail-header">
+      <div class="detail-title">제목: <%= detail[0].title %></div>
+      <div class="detail-writer">작성자: <%= detail[0].writer %></div>
+    </section>
+    <hr>
+
+    <section class="detail-content">
+      
+      <div class="content">
+        <%= detail[0].content %>
+      </div>
+    </section>
+    <hr>
+
+    <section class="detail-comment">
+      comment
+
+      <div class="comments">
+        <ul class="comment">
+          <li>
+            <div class="comment-name">닉네임: aaaa</div>
+            <div class="comment-content">댓글:</div>
+          </li>
+        </ul>
+      </div>
+      <p>
+        <form action="/comment" method="post">
+          내용: <textarea name="content" style="width:800px; height:150px"></textarea>
+          <input type="text" value="">
+          <input type="text" value="">
+        </form>
+      </p>
+ 
+      <button>submit</button>
+    </section>
+  </main>
+
+</body>
+</html>

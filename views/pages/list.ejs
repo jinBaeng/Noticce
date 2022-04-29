@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/public/style.css">
+
+  <title>Document</title>
+</head>
+<body>
+  <header>
+    <%- include('../partials/nav'); %>
+  </header>
+  <main>
+    <section>
+      <div class="row">
+        <div style="text-align: left; width: 300px;">id</div>
+        <div style="text-align: left; width: 300px;">title</div>
+        <div style="text-align: left; width: 300px;">writer</div>
+        <div style="text-align: left; width: 300px;">date</div>
+      </div>
+
+      </div>
+      <ul class="boards">
+        <% for(let i =0;i < boards.length;i++){ %>
+          <a href="/detail/<%= boards[i].board_id %>">
+            <li class="board">
+              <div class="board-id"> id:<%= boards[i].board_id %> </div>  
+              <div class="board-title"> <%= boards[i].title %> </div>
+              <div class="board-writer"><%= boards[i].writer %></div>
+              <div class="board-date"><%= boards[i].date %></div>
+            </li>
+            <hr>
+          </a>
+        <%} %>
+        
+     </ul>
+
+    <% for(let i =1;i <= pageCnt;i++){ %>
+
+      <% if( pageChk.page ==i){ %>
+        <a href="/list/<%= i%>" class="checkOn"><%= i%></a>
+      <% }else{ %>
+        <a href="/list/<%= i%>"> <%= i%> </a>
+      <%} %>
+    <%} %>
+      
+    </section>
+  </main>
+</body>
+<script>
+  
+</script>
+</html>

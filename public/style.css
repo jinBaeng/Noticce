@@ -1,0 +1,111 @@
+body{
+  text-align: center;
+  margin: 20px;
+  box-sizing: border-box;
+
+}
+a{
+  text-decoration: none;
+  color: black;
+}
+hr{
+  color:gainsboro;
+}
+ul{
+  list-style: none;
+  padding: 0;
+}
+li{
+  display: flex;
+}
+.checkOn{
+  background-color: grey;
+}
+
+nav{
+  display: flex;
+  justify-content: space-between;
+  background-color: #034f84;
+  padding: 20px;
+  border-radius: 20px;
+}
+nav ul{
+  display: flex;
+  justify-content: space-between;
+}
+nav ul li{
+  color: white;
+
+  margin: 5px;
+}
+section{
+  margin: 20px;
+}
+button{
+  background-color: #034f84;
+  color: white;
+}
+
+/* list.ejs */
+.row{
+  display: flex;
+  justify-content: space-between;
+}
+
+.boards{
+  color: black;
+}
+
+.board-id{
+  color: gray;
+}
+li.board {
+  display: flex;
+  justify-content: space-between;
+  height: 50px;
+  line-height: 50px;
+}
+
+/* detail */
+.detail-header{
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+}
+.detail-content{
+  padding: 30px;
+  text-align: left;
+}
+.board-id,.board-title,.board-writer,.board-date{
+  width: 300px;
+  text-align: left;
+}
+.comment{
+  background-color: azure;
+}
+/* detaill comment */
+.buttons{
+  margin: 10px;
+}
+.deleteBtn{
+  background-color: red;
+}
+.comment li {
+  border: 1px solid slategrey;
+}
+.comment-name{
+  border: 1px solid slategrey;
+
+  padding: 10px;
+  text-align: left;
+  width: 200px;
+}
+.comment-content{
+  border-left: 1px solid slategrey;
+  padding: 10px;
+  text-align: left;
+  width: 700px;
+}
+
+
+
