@@ -31,12 +31,27 @@ app.set('view engine','ejs');
 
 function login(req,res,next){
   if(req.user){
-    console.log("check"+req.user);
+    // console.log("check"+req.user);
     next()
   }else{
     res.write(`<script charset="utf-8">alert('you should login')</script>`);
     res.write("<script>window.location=\"/\"</script>");
   }
+}
+
+function isLogined(req){
+  let Logined = true;
+  console.log('test')
+  console.log(req.user)
+  if(req.user){
+    console.log(req.user);
+    Logined = true;
+  }else{
+    console.log("유저정보 없음");
+    Logined = false;
+  }
+  console.log('islogined:',Logined)
+  return Logined;
 }
 
 
@@ -51,7 +66,7 @@ passport.use(new LocalStrategy({
   connection.query(`SELECT * FROM user WHERE user_id = '${inputId}'`,(err,results)=>{
     if(err){console.log(error)}
     if(results.length<=0){
-      console.log(results)
+      // console.log(results)
       return done(null,false,{message:'존재하지 않는 아이디'})}
     if(inputPw == results[0].pw){
 /*       console.log(inputId,inputPw)
@@ -65,18 +80,12 @@ passport.use(new LocalStrategy({
 
 /* id를 이요해서 세션을 저장/ 로그인 성공시 발생 */
 passport.serializeUser(function (user, done) {
-/*   connection.query(`SELECT * FROM user WHERE session = '${req.session}'`,(err,results)=>{
-  }) */
-  console.log("시리얼라이즈 유저")
-  console.log(user[0].user_id)
   done(null, user[0].user_id)
 });
 /* 이 세션 데이터를 가진 사람을 db에서 찾아주세요/ 마이페이지 접속시 발생 */
 passport.deserializeUser(function (user, done) {
   connection.query(`SELECT * FROM user WHERE user_id = '${user}'`,(err,result)=>{
     console.log("check")
-    // console.log("보낼정보"+ results[0].user_id+results[0].pw)
-    // console.log("result:"+results[0].user_id)\
     console.log(result);
     done(null,result);
   });
@@ -101,22 +110,23 @@ app.post('/createUser',(req,res)=>{
 });
 
 app.get('/',(req,res)=>{
-  console.log(req.user)
-  res.render('./pages/index.ejs');
+  // console.log(res.session.user_id)
+  res.render('./pages/index.ejs',{Logined:isLogined(req)});
 });
 
 app.get('/login',(req,res)=>{
-  res.render('./pages/login.ejs');
+  res.render('./pages/login.ejs',{Logined:isLogined(req)});
 });
+
 
 
 
 app.get('/myPage',login,(req,res)=>{
-  console.log(req.user[0].user_id)
+  // console.log(req.user[0].user_id)
   /* console.log("내정보: "+req.user)
   res.render('./pages/myPage.ejs',{user:req.user[0]}); */
   connection.query(`SELECT board_id, writer, title, content,DATE_FORMAT(regdate,"%y/%m/%d") as date FROM board where writer='${req.user[0].user_id}'`, function (error, results, fields) {
-    console.log(results)
+    // console.log(results)
     if (error) {
       console.log(error)
     }
@@ -130,7 +140,7 @@ app.get('/write',login,(req,res)=>{
 });
 
 app.post('/add',(req,res)=>{
-  connection.query(`INSERT INTO board (writer,title,content,regdate) values ('${req.body.writer}','${req.body.title}','${req.body.content}',NOW());`)
+  connection.query(`INSERT INTO board (writer,title,content,regdate) values ('${req.body.writer}','${req.body.title}','${req.body.content}',NOW());`);
   console.log(req.body);
   res.redirect('/myPage');
 })
@@ -193,11 +203,12 @@ app.get('/update/:id',(req,res)=>{
 });
 
 app.post('/update/:id',(req,res)=>{
-  connection.query(`update board set title= ${req.body.title} , content = ${req.body.content} ,updatedate=NOW()  WHERE board_id= ${req.params.id}`, function (error, results, fields) {
+  console.log(req.params.id)
+  connection.query(`update board set title= '${req.body.title}' , content = '${req.body.content}' ,updatedate=NOW()  WHERE board_id= '${req.params.id}'`, function (error, results, fields) {
     console.log("fadafsfas")
     console.log(results)
     // res.render(`./pages/list.ejs`);
-    res.redirect('/detail/:id')
+    res.redirect(`/detail/${req.params.id}`)
   });
 })
 

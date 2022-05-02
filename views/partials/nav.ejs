@@ -8,8 +8,20 @@
    <a href="/write"><li>write</li></a>
     <a href="/list/1"><li>list</li></a>
   </ul>
-  <ul class="login_nav">
-    <a href="/login"><li>login</li></a>
-    <a href="/signUp"><li>signUp</li></a>
-  </ul>
+      <% if (Logined) { %>
+
+        <ul class="login_nav">
+          <a href="/logout"><li>logout</li></a>   
+        </ul>
+      
+      <% } else { %>
+      
+        <ul class="login_nav">
+          <a href="/login"><li>login</li></a>
+          <a href="/signUp"><li>signUp</li></a>
+        </ul>
+      
+      <% } %>
+
+
 </nav>
